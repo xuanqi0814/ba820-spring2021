@@ -32,6 +32,6 @@ The link below is available via your BU accounts.
 
 [BA820 Spring 2021 Syllabus](https://docs.google.com/document/d/1qt2xloBW-8pScSKR7VyeuztvdAhYXli0xIdNKWfVo9w/edit?usp=sharing)
 
-I reserve the right to modify the syllabus at any time at my discretion.
+> NOTE: I reserve the right to modify the syllabus at any time at my discretion.
 
 
