@@ -45,5 +45,9 @@ The link below is available via your BU accounts.
 
 - We will be using Big Query for our datasets this semester.  For ease-of-use, you may want to pin the dataset (i.e. database) that will have the tables for our work.  The dataset/tables are available via `questrom.datasets`.  __PRIOR TO CLASS__ you should have tested that you can access the tables.  For example, count the number of records in the diamonds table.
 
-![](https://snipboard.io/AWQhwE.jpg)
+<p align="center" width="100%">
+    <img  src="https://snipboard.io/AWQhwE.jpg"> 
+</p>
+
+
 
