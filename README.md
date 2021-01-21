@@ -40,3 +40,10 @@ The link below is available via your BU accounts.
 - BU-associated Google account
 - Google Cloud Account setup and any appropriate projects created (The syllabus has a code for $50 of GCP credits for this course)
 - A python coding environment where you are able to install packages.  This could be Colab or local coding.
+
+## Setup
+
+- We will be using Big Query for our datasets this semester.  For ease-of-use, you may want to pin the dataset (i.e. database) that will have the tables for our work.  The dataset/tables are available via `questrom.datasets`.  __PRIOR TO CLASS__ you should have tested that you can access the tables.  For example, count the number of records in the diamonds table.
+
+![](https://snipboard.io/AWQhwE.jpg)
+
