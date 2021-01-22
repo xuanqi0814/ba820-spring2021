@@ -43,7 +43,9 @@ The link below is available via your BU accounts.
 
 ## Setup
 
-- We will be using Big Query for our datasets this semester.  For ease-of-use, you may want to pin the dataset (i.e. database) that will have the tables for our work.  The dataset/tables are available via `questrom.datasets`.  __PRIOR TO CLASS__ you should have tested that you can access the tables.  For example, count the number of records in the diamonds table.
+- We will be using Big Query for our datasets this semester.  For ease-of-use, you may want to pin the dataset (i.e. database) that will have the tables for our work.  The dataset/tables are available via `questrom.datasets`.  __PRIOR TO CLASS__ you should have tested that you can access the tables.  For example, count the number of records in the `diamonds` table.
+
+> Should you have any issues, please post issues to our Forums on Questrom Tools.  Also, a friendly reminder per above to use the code in the syllabus to redeem your GCP credits affiliated with this course.
 
 <p align="center" width="100%">
     <img  src="https://snipboard.io/AWQhwE.jpg"> 
