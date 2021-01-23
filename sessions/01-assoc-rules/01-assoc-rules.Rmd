@@ -1,0 +1,756 @@
+---
+title: "Association Rule Mining"
+subtitle: "Module 1"
+author: "Brock Tibert"
+date: "January 27, 2021"
+output:
+  xaringan::moon_reader:
+    css: ["default", "../../assets/bu-fonts.css", "../../assets/bu.css"]
+    self_contained: true # if true, fonts will be stored locally
+    seal: true # show a title slide with YAML information
+    includes:
+      in_header: "../../assets/mathjax-equation-numbers.html"
+    nature:
+      beforeInit: ["../../assets/remark-zoom.js", "https://platform.twitter.com/widgets.js"]
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9' # alternatives '16:9' or '4:3' or others e.g. 13:9
+      navigation:
+        scroll: false # disable slide transitions by scrolling
+---
+
+```{r setup, include=FALSE}
+
+## knitr options
+knitr::opts_chunk$set(comment = NA)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(fig.retina = 3)
+# knitr::opts_chunk$set(echo = FALSE)
+
+## printing options
+options(digits = 3)
+
+## load the packages
+
+
+
+```
+
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# Outline for Today
+
+.pull-left[
+- Discuss the mechanics and delivery of the course
+- Base `python` versus External Packages
+- What we will cover and learn this semester
+- Topic 1: Association Rules for Pattern Discovery
+  - Method/Approach
+  - Evaluation
+  - Applications
+  - Hands on lab
+]
+
+
+```{r echo=FALSE, out.width='50%'}
+knitr::include_graphics("../../assets/arules-mba-image.png")
+```
+
+
+---
+
+## LFA In-Class Attendance Module
+
+- For those of us who may attend in-person, Questrom will be using a new app, and not the utility found on QTools.
+- Hopefully this makes signing up for class easier all around, but this is also my first time using the tool
+- As always, please don't hesitate to reach out on the forums if you run into issues
+
+---
+class: center, bottom
+background-image: url("../../assets/zoom-logo.png")
+
+
+> All of our classes will be recorded and posted to the Media Gallery on QTools.
+
+
+
+---
+class:  segue, center
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+.font200[Course Delivery Overview]
+
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# Course Dellivery 
+
+.pull-left[
+```{r echo=FALSE, fig.align='center'}
+## example from the excellent resource:
+## https://www.r-graph-gallery.com/index.html
+
+library(ggplot2)
+dat <- data.frame(category = c("Methodology", 
+                             "Hands-on Application", 
+                             "Case Study/Exercise"),
+                count = c(3, 4, 3))
+ 
+# Compute percentages
+dat$fraction <- dat$count / sum(dat$count)
+
+# Compute the cumulative percentages (top of each rectangle)
+dat$ymax <- cumsum(dat$fraction)
+
+# Compute the bottom of each rectangle
+dat$ymin <- c(0, head(dat$ymax, n=-1))
+
+# Compute label position
+dat$labelPosition <- (dat$ymax + dat$ymin) / 2
+
+# Compute a good label
+dat$label <- dat$category
+
+# Make the plot
+ggplot(dat, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=c("red", "blue", "grey"))) +
+  geom_rect() +
+  geom_text( x=2, aes(y=labelPosition, label=label), size=6) + # x here controls label position (inner / outer)
+  #scale_fill_brewer(palette=3) +
+  #scale_color_brewer(palette=3) +
+  coord_polar(theta="y") +
+  xlim(c(-1, 4)) +
+  theme_void() +
+  theme(legend.position = "none")
+
+```
+]
+
+.pull-right[
+.font110[A _slightly_ different approach compared to `BA760`]
+
+- Discuss the method and the mechanics/understanding of how it works
+- Explore the tools available to us in the `python` ecosystem
+- Build mental models of how to include each technique into a larger analytics project, with a focus on reporting technical results to a nontechnical audience
+- In-class Exercises / Case Studies / Competitions to be completed as teams
+- Yes we will write code, but it's about coding up the model __AND__ interpreting/presenting the findings
+]
+
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# Overview
+
+- Just like with `765`, I believe DataCamp is an important facet of this offering
+  - It is important to review the DataCamp material
+  - Think of this as the equivalent of assigned readings for a class, but I leave it to you whether its more helpful before or after a class meeting.
+  
+--
+
+
+> Class preparation makes these advanced topics, especially when we are writing code, easier in the long run.
+
+- You will leave this class with the ability to build both write code to solve analytical challenges, and discuss your findings with a variety of audiences
+  
+- It's about understanding the methods, applying them, and telling a story of the results.  Why does it matter?  Are we introducing risk/uncertainty into the business?
+
+
+---
+class:  segue-red, center
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+.font200[Moving Beyond Base `python`]
+
+
+---
+class:center
+background-image: url("../../assets/aladdin.jpg")
+background-size: 100% 100%
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# Beyond Base python
+
+- I am certain by now you are increasingly comfortable with python and tools like `pandas`
+- We will be using a large number of external packages this course 
+- __Please use the forums for help with installation and setup of these packages, though a number do come pre-configured on Colab__
+
+- There are many, many ways to attack some of the problems that we are doing, and some may be handled differently in DataCamp.  That's ok!  
+  - __Exposure to what is possible and a variety of ways to solve the problem is important!__
+  
+
+
+
+---
+class:  segue-teal, center
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+.font200[.black[What we will be covering in `BA-820`]]
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# Topics
+
+.pull-left[
+## Unsupervised ML
+- Association Rules/Sequence Analysis (Market Basket Analysis)
+- Clustering/Segmentation Methods
+- Dimensionality Reduction Techniques
+]
+
+--
+
+.pull-right[
+## Text Analytics
+- Text Pre-processing
+- Sentiment Analysis
+- Text Clustering and Classification
+- Text Representations
+]
+
+--- 
+
+- Unsupervised machine learning helps us identify structure and patterns in our datasets, which also can be used to generate features for downstream supervised ML tasks.  
+
+- The majority of the data we generate on a daily basis is unstructured.  We will learn how the foundation of Natural Langauge Processing and Understanding (NLP/NLU) and see how both UML and SML techniques still apply to text!
+
+
+
+
+
+---
+class: center, middle
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+.large[All of the topics material you have been covering in this program can be combined!]
+
+1.  We will be using SQL to collect (most) datasets from Google Big Query
+1.  The [repo for this course](https://github.com/Btibert3/ba820-spring2021) will constantly be updated, so you should make sure that you clone the material and pull the changes before class.
+
+
+---
+class:  segue-white, middle, center
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+.font200[.red[Association Rules]]
+
+.font120[.grey[Intuitive pattern recognition in transactional data]]
+
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# Overview
+
+### What it is:
+- Find patterns in transactional data in order to determine the co-occurence, or assocation, between items.  
+
+### What it does:
+- Given a known set of items (`LHS`), what other items (`RHS`) tend to co-occur with the `LHS`
+
+### What it means:
+- We can leverage the `RHS` items and treat these as _recommendations_ given the `LHS`.
+
+_Association Rules can be used as simple recommendation engine but is more commonly thought as a pattern recognition technique to surface "if this, than that" type of rules._
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# Example Applications
+
+
+
+- Retail 
+  - Which products are commonly purchased together. Use this information for store planning/layout optimization.
+
+
+- Marketing
+  - Given a user's shopping cart (e-commerce), recommend products that often go with the `LHS`, or known items currently in the cart.
+  - What pages/products do you view when going to a given website
+
+- Finance
+  - Portfolio analysis; which stocks are commonly held in an investment portfolio
+  
+???
+
+adpated from: https://www3.nd.edu/~rjohns15/cse40647.sp14/www/content/lectures/09%20-%20Association%20Rules.pdf
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# The Algorithm
+
+We will be using the `Apriori` algorithm.  This is found within the `frequent_patterns` module in the [mlxtend package](http://rasbt.github.io/mlxtend/).
+
+
+1.  Identify all items (and subsequently, itemsets) that meet certain thresholds, such as a minimum number of times an item must appear across all of the transactions
+2.  Generate rules from the Frequent itemsets.  These rules must also meet certain criteria such as how many times they appear in the transactions.
+
+The algorithm needs to perform full scans of the database to evaluate candidate itemsets and rules.  This can be computationally intensive on larger datasets and the total number of items to consider.
+
+This is a popular algorithm because of it's ease of intuition and interpretation and is an unsupervised technique because we do not have a defined target to predict or classify.
+
+> We simply use the items and the transactions to find patterns within our dataset.
+
+
+
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# Terminology
+
+- .red[`Items`]: The set of objects or items available to be purchaed, or viewed, or streamed.
+- .red[`Transaction`]: A trip to the store, Netflix viewing history, your most recent Spotify songs streamed.  A transcaction contains one or more items.
+- .red[`Rule`]: Can be considered an if _this_ then _that_.  
+  - If purchase bread and eggs, then also purchase milk.  
+  - .content-box-yellow[{Bread, Eggs} => {Milk}]
+- .red[`LHS`, or `antecedant`]: Left-hand side of the rule
+  - The known set of objects.  {Bread, Eggs}
+- .red[`RHS`, or `consequent`]: The items that are associated, or co-occur with the `LHS`
+  - Above, this would be {Milk}.
+- .red[`(Frequent) Itemset`]: A collection of one or more items. 
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# A Visual Reference 
+
+.pull-left[
+- The datset of transactions is on the right
+- Items = eggs, milk, bread, beer, diapers, cola
+- Itemsets are a collection of k-items (usualy 2 or more) 
+- Frequent Itemsets are itemsets that are common across the transactions and meet our thresholds for support and confidence.
+
+You also see two new terms; .red[Support] and .red[Frequency].  As you can imagine, Association rules are built on top of statistics and we uses these metrics to guide our decision making to find __interesting__ rules.  We will come back to the evaluation in a moment.
+
+]
+
+.pull-right[.middle[
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics("../../assets/dc-mba.png")
+```
+]]
+
+.center[.footnote[https://www.datacamp.com/community/tutorials/market-basket-analysis-r]]
+
+
+
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# Let's see how we configure this
+
+```{python eval=FALSE}
+from mlxtend.frequent_patterns import apriori, association_rules
+
+items = apriori(groceries, 
+                use_colnames=True,
+                min_support = .001)
+```
+
+
+Above we are defining an `python` object called `rules` which is the ouput from the `apriori` function, which executes the simple aglorithm we just discussed. 
+
+We use the min_support parameter to provide guidance to the algorithm in order to do pruning from the onset.  
+
+For reference on what you can control when deploying the `apriori` algorithm to your database of transactions, see [here](http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/) for examples and documentation.
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# Let's see how we configure this
+
+```{python eval=FALSE}
+items = apriori(groceries,     #<<
+                use_colnames=True,
+                min_support = .001)
+```
+
+
+- The dataframe that we holds our transcations
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# Let's see how we configure this
+
+```{python eval=FALSE}
+items = apriori(groceries,     
+                use_colnames=True,   #<<
+                min_support = .001)
+```
+
+
+- We can use the column names to represent our items, otherwise the column indices.  If we prepare our data properly, it's much easier to use the item name in our columns.
+
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# Let's see how we configure this
+
+```{python eval=FALSE}
+items = apriori(groceries,     
+                use_colnames=True,  
+                min_support = .001)     #<<
+```
+
+
+- `min_support` = The minimum support required for itemsets be retained.
+
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+# How does this all come together?
+
+.pull-left[
+
+```{python eval=FALSE}
+rules = association_rules(items, 
+                          metric='support', 
+                          min_threshold=.05)
+
+rules.head(1).T
+```
+
+|                    | 0                               |
+|:-------------------|:--------------------------------|
+| antecedents        | ('other vegetables') |
+| consequents        | ('whole milk')       |
+| antecedent support | 0.1934926283680732              |
+| consequent support | 0.25551601423487547             |
+| support            | 0.07483477376715811             |
+| confidence         | 0.38675775091960063             |
+| lift               | 1.5136340948246207              |
+| leverage           | 0.025394308582718045            |
+| conviction         | 1.2140128748166512              |
+
+
+Above we use `.T` to transpose the output.
+
+]
+
+.pull-right[
+
+- In this example, the rule only includes two items, one on each side, but that isn't always the case
+- We get a host of metrics that we can use to determine the _interestingess_ of our rules
+  - The DataCamp course itemized for this module does a pretty good job going into the rules.
+
+Let's now formally define the metrics we are using to control the algorithm and make decisions.
+
+]
+
+---
+background-image: url("../../assets/BU_Questrom.png"), url("../../assets/baskets.png")
+background-position: 5% 99%, 80% 99%
+background-size: 160px, 500px
+
+# Metric: .red[__Support__]
+
+
+.font130[Consider the rule {A} => {D}]
+
+.font150[$$Support=\frac{Transactions\ Containing\ (A, D)}{All\ Transactions}$$]
+
+.font150[$$Support=\frac{2}{5}=.4\ or\ 40\%$$]
+
+> Intuition: Using the entire datbase of transactions, how often does the itemset {A,D} occur
+
+
+---
+background-image: url("../../assets/BU_Questrom.png"), url("../../assets/baskets.png")
+background-position: 5% 99%, 80% 99%
+background-size: 160px, 500px
+
+# Metric: .red[__Confidence__]
+
+.font130[Consider the rule {A} => {D}]
+
+.font150[$$Confidence=\frac{Support\ (A,\ D)}{Support\ A}$$]
+
+.font150[$$Confidence=\frac{2}{3}=.6\ or\ 60\%$$]
+
+> For __all__ of the transactions containing `LHS` A, how confident are we that the rule/transaction also includes `RHS` D is true.
+
+
+
+---
+background-image: url("../../assets/BU_Questrom.png"), url("../../assets/baskets.png")
+background-position: 5% 99%, 80% 99%
+background-size: 160px, 500px
+
+# Metric: .red[__Lift__]
+
+.font130[Consider the rule {A} => {D}]
+
+.font150[$$Lift=\frac{Support\ (A,\ D)}{Support\ A * Support\ D}$$]
+
+.font150[$$Lift=\frac{.4}{.6\ * .6}=1.11$$]
+
+- Often considered a quality measure for the rule.
+- When `Lift > 1`, we improve our knowledge of when `{D}` occurs as compared to the overall frequency of `{D}`
+- Lift = 1 suggests independence between A/D
+- Generally look for lift > 1
+
+
+---
+background-image: url("../../assets/BU_Questrom.png"), url("../../assets/baskets.png")
+background-position: 5% 99%, 50% 20%
+background-size: 160px, 550px
+
+# Your Turn: Calculate the metrics
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+> Take a few minutes, hand-calculate the stats to fill in the table below.
+
+<br>
+
+
+| Rule       | Support | Confidence |    Lift     |
+|------------|---------|------------|-------------|
+| A => D     |         |            |             |
+| C => A     |         |            |             |
+| A => C     |         |            |             |
+| B & C => D |         |            |             |
+
+
+
+---
+background-image: url("../../assets/BU_Questrom.png"), url("../../assets/baskets.png")
+background-position: 5% 99%, 50% 20%
+background-size: 160px, 550px
+
+# Calculate the metrics
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+> Take a few minutes, hand-calculate the stats to fill in the table below.
+
+<br>
+
+
+| Rule       | Support | Confidence |    Lift            |
+|------------|---------|------------|--------------------|
+| A => D     |  2 / 5  |    2 / 3   | .4 / (3/5) * (3/5) |
+| C => A     |  2 / 5  |    2 / 4   | .4 / (4/5) * (3/5) |
+| A => C     |  2 / 5  |    2 / 3   | .4 / (3/5) * (4/5) |
+| B & C => D |  1 / 5  |    1 / 3   | .2 / (3/5) * (3/5) |
+
+
+
+---
+class: middle, center
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+
+.font150[.black[.red[Thought experiment:] Stepping back, as an analyst trying to solve a business problem, how can we combine Support / Confidence / Lift in relationship the rules?]]
+
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+1.  Rules need to be actionable, and not (very) rare
+  - This can be defined as support count or frequency
+1.  Confidence and Lift helps us identify where we improve our knowledge of the `RHS` itemset.  Large values for lift is a desirable.  
+
+> Rules are not causation, but help us identify patterns of item co-occurrence.  
+
+
+<br>
+
+__Association Rules are powerful in many contexts, but beware, rules and metrics can be symmetric so we should always frame our analysis/insights for strategic findings on:__
+- Confidence and lift where the `RHS` is relatively rare in our dataset
+- Use the `RHS` to anchor your problem.  
+  - In a sales or marketing context, to sell more the of the `RHS`, find the `LHS` rules and use them as the identify candidates for the campaign
+
+
+---
+class:  middle, center
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+
+.font200[But what does a dataset look like?]
+
+
+
+---
+# Two (Common) Types of Datasets shapes: 
+
+
+Not limited to below, but datasets in the reality tend to come in two formats, though the format on the left is probably the most common:
+
+.pull-left[
+
+```{r echo=FALSE}
+library(tidyverse)
+set.seed(54897)
+dat1 = data.frame(trans_id = sample(1:3, 5, replace=T), 
+                  item = sample(letters[1:3], 5, replace=T), stringsAsFactors = FALSE)
+dat1 = dat1 %>% arrange(trans_id)
+knitr::kable(dat1, format="html")
+```
+
+Above, the data are in a `single` format
+
+- need to have a transaction id that groups the rows together
+- need to think about the items (we are not aggregating, so 1 record per trans_id/item)
+
+]
+
+
+.pull-right[
+```{r echo=FALSE}
+dat2 = dat1 %>% pivot_wider(names_from=item, values_from = item)
+dat2 = dat2 %>% unite("items", 2:4, sep=",", na.rm=TRUE)
+knitr::kable(dat2, format="html")
+```
+
+Above, the data are in a `basket` format, which you might see from time-to-time.
+
+- 1 row per transaction, and a column of comma-separated values for the items
+- I am keeping trans_id above, in practice, it would be a single column dataset with just the `items` column
+- .red[Python can help us rehsape the data]
+]
+
+
+---
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+
+## What mlxtexd is looking for
+
+<br>
+
+.pull-left[
+
+
+
+```{r echo=FALSE}
+set.seed(54897)
+dat1 = data.frame(trans_id = sample(1:3, 5, replace=T), 
+                  item = sample(letters[1:3], 5, replace=T), stringsAsFactors = FALSE)
+dat1 = dat1 %>% arrange(trans_id)
+knitr::kable(dat1, format="html")
+```
+
+<br>
+
+Can be transformed to `r emo::ji("arrow_right")` 
+
+]
+
+
+.pull-right[
+
+<br>
+
+Below is the format that `mlxtend` is looking for.  Effectively, this is a one-hot encoded representation with each item as a separate column.
+
+```{r echo=FALSE}
+df = data.frame(a=c('False', 'True', 'False'),
+                b=c('True', 'False', 'False'),
+                c=c('True', 'True', 'True'))
+row.names(df) = 1:3
+df
+```
+
+> Note that I am using the transaction ids as the row index.
+
+]
+
+
+---
+class: center, middle
+background-image: url("../../assets/BU_Questrom.png")
+background-position: 5% 99%
+background-size: 160px
+
+.font200[.red[Hands on Application]]
+
+
+
+
+
+
