@@ -629,7 +629,7 @@ background-size: 160px
 
 1.  Rules need to be actionable, and not (very) rare
   - This can be defined as support count or frequency
-1.  Confidence and Lift helps us identify where we improve our knowledge of the `RHS` itemset.  Large values for lift is a desirable.  
+1.  Confidence and Lift helps us identify where we improve our knowledge of items co-occurring.  Large values for lift is a desirable.  
 
 > Rules are not causation, but help us identify patterns of item co-occurrence.  
 
