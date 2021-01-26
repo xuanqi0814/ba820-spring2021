@@ -34,6 +34,10 @@ Below are some python-based podcasts that I highly recommend.
 - [Voice Bot Podcast](https://voicebot.ai/voicebot-podcasts/)
 
 
+## Assocation Rules
 
+Below are some resources for association rules.
+
+- [Measures](https://michael.hahsler.net/research/association_rules/measures.html)
 
 
