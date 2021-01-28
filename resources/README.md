@@ -39,5 +39,9 @@ Below are some python-based podcasts that I highly recommend.
 Below are some resources for association rules.
 
 - [Measures](https://michael.hahsler.net/research/association_rules/measures.html)
+- [A well-done overview of Apriori](https://medium.com/cracking-the-data-science-interview/an-introduction-to-big-data-itemset-mining-a97a17e0665a)
+- [Journal Article on Aprior vs FP Growth](http://www.ijcstjournal.org/volume-4/issue-4/IJCST-V4I4P28.pdf)
+
+
 
 
