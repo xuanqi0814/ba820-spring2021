@@ -67,9 +67,20 @@ That should remove a good number of rows, but keeps just the core players on any
 
 A quick note on the data sets:
 
-1.  `players` = these are players and their *aggregate* performance over the course of a season.  For more on what the column names, refer to the source of the data here^[ https://www.hockey-reference.com/leagues/NHL_2019_skaters.html]
+1.  `players` = these are players and their *aggregate* performance over the course of a season.  For more on what the column names, refer to the source of the data here:
 
-1.  `teams` = *aggregate* performance of teams for the 2018-19 season.  Information about the columns can be found here^[https://www.hockey-reference.com/leagues/NHL_2019.html]
+```{marginfigure}
+For a reference on player stats and a mapping to the column definitions
+https://www.hockey-reference.com/leagues/NHL_2019_skaters.html
+```
+
+1.  `teams` = *aggregate* performance of teams for the 2018-19 season.  Information about the columns can be found here:
+
+```{marginfigure}
+For a reference on team stats
+https://www.hockey-reference.com/leagues/NHL_2019.html
+```
+
 
 ## Your Team Challenge
 

@@ -320,9 +320,13 @@ if (window.hljs) {
 <p>That should remove a good number of rows, but keeps just the core players on any given team.</p>
 <p>A quick note on the data sets:</p>
 <ol style="list-style-type: decimal">
-<li><p><code>players</code> = these are players and their <em>aggregate</em> performance over the course of a season. For more on what the column names, refer to the source of the data here<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p></li>
-<li><p><code>teams</code> = <em>aggregate</em> performance of teams for the 2018-19 season. Information about the columns can be found here<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p></li>
+<li><code>players</code> = these are players and their <em>aggregate</em> performance over the course of a season. For more on what the column names, refer to the source of the data here:</li>
 </ol>
+<p><label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle"><span class="marginnote"><span style="display: block;">For a reference on player stats and a mapping to the column definitions <a href="https://www.hockey-reference.com/leagues/NHL_2019_skaters.html" class="uri">https://www.hockey-reference.com/leagues/NHL_2019_skaters.html</a></span></span></p>
+<ol style="list-style-type: decimal">
+<li><code>teams</code> = <em>aggregate</em> performance of teams for the 2018-19 season. Information about the columns can be found here:</li>
+</ol>
+<p><label for="tufte-mn-2" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle"><span class="marginnote"><span style="display: block;">For a reference on team stats <a href="https://www.hockey-reference.com/leagues/NHL_2019.html" class="uri">https://www.hockey-reference.com/leagues/NHL_2019.html</a></span></span></p>
 </div>
 <div id="your-team-challenge" class="section level2">
 <h2>Your Team Challenge</h2>
@@ -357,7 +361,7 @@ if (window.hljs) {
 <ol style="list-style-type: decimal">
 <li>Transform columns (<code>g</code>, <code>a</code>, and <code>pts</code>) to change the units of the observation. For these three columns, adjust the measurement by the column <code>gp</code></li>
 </ol>
-<p><label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle"><span class="marginnote"><span style="display: block;">For this, aggregate stats reward players that played in more games. If we didn’t transform the data, that’s ok, but for a few of the columns, we can transform the statistics into <em>rate</em> statistics.</span></span></p>
+<p><label for="tufte-mn-3" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle"><span class="marginnote"><span style="display: block;">For this, aggregate stats reward players that played in more games. If we didn’t transform the data, that’s ok, but for a few of the columns, we can transform the statistics into <em>rate</em> statistics.</span></span></p>
 <ol style="list-style-type: decimal">
 <li>Prepare our data sets for clustering and profiling. Note: The majority of the time, we are using numeric features for our clustering.</li>
 </ol>
