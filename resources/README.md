@@ -17,6 +17,8 @@ Below are links to fantastic R and python resources for all sorts of data scienc
 | Label Studio | Annotate your data = build novel datasets! |https://labelstud.io/ |
 | flit | Build python packages with a simple API | https://flit.readthedocs.io/en/latest/ |
 | RStudio 1.4 | Finally starting to see great support for python | https://blog.rstudio.com/2021/01/19/announcing-rstudio-1-4/ |
+| resumeR | Build a resume with R | https://github.com/jaredlander/resumer |
+| xaringanExtra | Extensions for xaringan (build slide decks in R!) | https://pkg.garrickadenbuie.com/xaringanExtra/#/README?id=xaringanextra|
 
 
 ## Awesome Data Viz Resources
