@@ -19,6 +19,15 @@ Below are links to fantastic R and python resources for all sorts of data scienc
 | RStudio 1.4 | Finally starting to see great support for python | https://blog.rstudio.com/2021/01/19/announcing-rstudio-1-4/ |
 
 
+## Awesome Data Viz Resources
+
+Below are links to resources that make plotting easier for all sorts of tasks, especially in python!
+
+| Resource  | Info | URL |
+| ------------- | ------------- | ------------- |
+| skplot | Useful plots for ML via sklearn objects | https://scikit-plot.readthedocs.io/en/stable/index.html |
+
+
 ## Great Tutorials
 
 I will add resources momentarily.
