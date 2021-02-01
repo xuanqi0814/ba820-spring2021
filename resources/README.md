@@ -17,6 +17,17 @@ Below are links to fantastic R and python resources for all sorts of data scienc
 | Label Studio | Annotate your data = build novel datasets! |https://labelstud.io/ |
 | flit | Build python packages with a simple API | https://flit.readthedocs.io/en/latest/ |
 | RStudio 1.4 | Finally starting to see great support for python | https://blog.rstudio.com/2021/01/19/announcing-rstudio-1-4/ |
+| resumeR | Build a resume with R | https://github.com/jaredlander/resumer |
+| xaringanExtra | Extensions for xaringan (build slide decks in R!) | https://pkg.garrickadenbuie.com/xaringanExtra/#/README?id=xaringanextra|
+
+
+## Awesome Data Viz Resources
+
+Below are links to resources that make plotting easier for all sorts of tasks, especially in python!
+
+| Resource  | Info | URL |
+| ------------- | ------------- | ------------- |
+| skplot | Useful plots for ML via sklearn objects | https://scikit-plot.readthedocs.io/en/stable/index.html |
 
 
 ## Great Tutorials
@@ -39,5 +50,9 @@ Below are some python-based podcasts that I highly recommend.
 Below are some resources for association rules.
 
 - [Measures](https://michael.hahsler.net/research/association_rules/measures.html)
+- [A well-done overview of Apriori](https://medium.com/cracking-the-data-science-interview/an-introduction-to-big-data-itemset-mining-a97a17e0665a)
+- [Journal Article on Aprior vs FP Growth](http://www.ijcstjournal.org/volume-4/issue-4/IJCST-V4I4P28.pdf)
+
+
 
 
